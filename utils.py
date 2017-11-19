@@ -2,60 +2,82 @@ import time
 
 
 class Log(object):
-    """
-    design like this for external easy to use,
-    you can just use like log.d log.w to print any lever you want ,
-    by way of set self.filter to different value, you can easy to control all your print
-    """
+    """ log level """
+    FATAL = 'F'
+    ERROR = 'E'
+    WARNING = 'W'
+    DEBUG = 'D'
+    INFO = 'I'
+    VERBOSE = 'V'
 
-    def __print(self, lever, text, write=False, **kwargs):
+    def __admit(self,  *args, **kwargs):
+        kw = kwargs.copy()
 
-        if lever >= self.filter:
+        lv = kw.pop('level')
+        priority = {
+            'F': 5,
+            'E': 4,
+            'W': 3,
+            'D': 2,
+            'I': 1,
+            'V': 0,
+        }
+        return priority[lv] >= priority[self.filter] and len(args) > 0
 
-            msg = "[{}]  {}\t{}".format(self.namespace[lever],
-                                        time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-                                        text)
+    def __args(self, lv, *args, **kw):
+        t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        a = list(args)
+        tag = ""
+        if 'tag' in kw:
+            tag = kw.pop('tag')
+        msg = "[{}]\t{}\t{}".format(lv, t, tag).ljust(40)
+        a[0] = "{}\t{}".format(msg, a[0])
+        return a
 
-            if write:
-                with open('log.test.txt', 'a', encoding='utf-8') as f:
-                    print(msg, file=f, **kwargs)
+    def __print(self, *args, **kw):
+        if not self.__admit( *args, **kw):
+            return
 
-            print(msg, **kwargs)
+        a = self.__args(kw.pop('level'), *args, **kw)
 
-    def f(self, text, write=False, **kwargs):
-        self.__print(self.FATAL, text, write, **kwargs)
+        if "write" in kw:
+            w = kw.pop('write')
+            if isinstance(w, bool):
+                path = 'default.log'
+            else:
+                path = w
+            with open(path, 'a', encoding='utf-8') as f:
+                print(*a, file=f, **kw)
+        print(*a, **kw)
 
-    def e(self, text, write=False, **kwargs):
-        self.__print(self.ERROR, text, write, **kwargs)
+    def f(self, *args, **kw):
+        kw["level"] = self.FATAL
+        self.__print(*args, **kw)
 
-    def w(self, text, write=False, **kwargs):
-        self.__print(self.WARNING, text, write, **kwargs)
+    def e(self, *args, **kw):
+        kw["level"] = self.ERROR
+        self.__print(*args, **kw)
 
-    def d(self, text, write=False, **kwargs):
-        self.__print(self.DEBUG, text, write, **kwargs)
+    def w(self, *args, **kw):
+        kw["level"] = self.WARNING
+        self.__print(*args, **kw)
 
-    def i(self, text, write=False, **kwargs):
-        self.__print(self.INFO, text, write, **kwargs)
+    def d(self, *args, **kw):
+        kw["level"] = self.DEBUG
+        self.__print(*args, **kw)
 
-    def v(self, text, write=False, **kwargs):
-        self.__print(self.VERBOSE, text, write, **kwargs)
+    def i(self, *args, **kw):
+        kw["level"] = self.INFO
+        self.__print(*args, **kw)
+
+    def v(self, *args, **kw):
+        kw["level"] = self.VERBOSE
+        self.__print(*args, **kw)
 
     def __init__(self):
-        self.FATAL = 5
-        self.ERROR = 4
-        self.WARNING = 3
-        self.DEBUG = 2
-        self.INFO = 1
-        self.VERBOSE = 0
-        self.namespace = {
-            5: "F",
-            4: "E",
-            3: "W",
-            2: "D",
-            1: "I",
-            0: "V",
-        }
-
+        """
+        by set self.filter to different value, you can easy to control all your print
+        """
         self.filter = self.VERBOSE
 
 

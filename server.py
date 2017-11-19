@@ -1,46 +1,41 @@
 import socket
+
+from request import Request
 from utils import log
+from route.blog import route_dict as route_blog
 
 
 def route_a():
-    return b"HTTP/1.1 200 OK\r\n\r\n<h1>hello python web a !</h1>"
+    pass
 
 
-def route_b():
-    return b"HTTP/1.1 200 OK\r\n\r\n<h1>hello python web  b !</h1>"
+def route_404(request):
+    return b"HTTP/1.1 200 OK\r\n\r\n<h1>404</h1>"
 
 
-def response_for_path(path):
-    """
-    :param path: the target file of client
-    :return: a route method
-    """
-    routes = {
-        '/': route_a,
-        '/123': route_b,
-        '/favicon.ico': route_b,
-    }
-    route = routes.get(path)
-    return route()
+def response_for_path(request):
+    routes = {}
+    routes.update(route_blog())
+    route = routes.get(request, route_404)
+    return route(request)
 
 
 def server_run(host='', port=3000):
-    with socket.socket() as s:  # 1st. gain a socket
-        s.bind((host, port))  # 2nd. bind socket to target port
-        log.i("host is {} , port is {}".format(host, port))
+    with socket.socket() as s:
+        s.bind((host, port))
+        log.i("host is {} , port is {}".format(host, port), write='log')
 
         while True:
-            s.listen(5)  # socket start listening
-            conn, address = s.accept()  # gain the client connection and  address
+            s.listen(5)
+            conn, address = s.accept()
+            log.i("conn is {} , address is {}".format(conn, address), write=True)
+            request = Request.build(conn.recv(1024))
 
-            request = conn.recv(1024).decode("utf-8")  # gain the request content from client
-            parts = request.split()
-            log.i("request is {} part is {}".format(request, parts))
+            log.i("request is {} ".format(request))
 
-            if len(parts) > 0:
-                path = parts[1]
-                response = response_for_path(path)
-                conn.sendall(response)  # send response
+            if len(request.raw_data) > 0:
+                response = response_for_path(request)
+                conn.sendall(response)
             else:
                 # sometimes chrome will send empty request
                 log.d("get a empty request")
@@ -49,8 +44,8 @@ def server_run(host='', port=3000):
 
 
 if __name__ == '__main__':
-    local_config = dict(
-        host="0.0.0.0",
-        port=2000,
-    )
-    server_run(**local_config)
+    config = {
+        "host": "0.0.0.0",
+        "port": 2000,
+    }
+    server_run(**config)
