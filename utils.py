@@ -8,27 +8,37 @@ class Log(object):
     by way of set self.filter to different value, you can easy to control all your print
     """
 
-    def __print(self, lever, text, **kwargs):
+    def __print(self, lever, text, write=False, **kwargs):
+
         if lever >= self.filter:
-            print("[{}]  {}\t{}".format(lever, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), text), kwargs)
 
-    def f(self, text, **kwargs):
-        self.__print(self.FATAL, text, **kwargs)
+            msg = "[{}]  {}\t{}".format(self.namespace[lever],
+                                        time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                                        text)
 
-    def e(self, text, **kwargs):
-        self.__print(self.ERROR, text, **kwargs)
+            if write:
+                with open('log.test.txt', 'a', encoding='utf-8') as f:
+                    print(msg, file=f, **kwargs)
 
-    def w(self, text, **kwargs):
-        self.__print(self.WARNING, text, **kwargs)
+            print(msg, **kwargs)
 
-    def d(self, text, **kwargs):
-        self.__print(self.DEBUG, text, **kwargs)
+    def f(self, text, write=False, **kwargs):
+        self.__print(self.FATAL, text, write, **kwargs)
 
-    def i(self, text, **kwargs):
-        self.__print(self.INFO, text, **kwargs)
+    def e(self, text, write=False, **kwargs):
+        self.__print(self.ERROR, text, write, **kwargs)
 
-    def v(self, text, **kwargs):
-        self.__print(self.VERBOSE, text, **kwargs)
+    def w(self, text, write=False, **kwargs):
+        self.__print(self.WARNING, text, write, **kwargs)
+
+    def d(self, text, write=False, **kwargs):
+        self.__print(self.DEBUG, text, write, **kwargs)
+
+    def i(self, text, write=False, **kwargs):
+        self.__print(self.INFO, text, write, **kwargs)
+
+    def v(self, text, write=False, **kwargs):
+        self.__print(self.VERBOSE, text, write, **kwargs)
 
     def __init__(self):
         self.FATAL = 5
@@ -37,6 +47,15 @@ class Log(object):
         self.DEBUG = 2
         self.INFO = 1
         self.VERBOSE = 0
+        self.namespace = {
+            5: "F",
+            4: "E",
+            3: "W",
+            2: "D",
+            1: "I",
+            0: "V",
+        }
+
         self.filter = self.VERBOSE
 
 
