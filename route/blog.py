@@ -1,5 +1,10 @@
+from utils import jinja as j, log
+from route import http_response as response
+
+
 def index(request):
-    return b"HTTP/1.1 200 OK\r\n\r\n<h1>hello python web a !</h1>"
+    body = j.template("blog_index.html")
+    return response(body)
 
 
 def list(request):

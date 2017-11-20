@@ -1,4 +1,5 @@
 import time
+from jinja2 import FileSystemLoader, Environment
 
 
 class Log(object):
@@ -10,7 +11,7 @@ class Log(object):
     INFO = 'I'
     VERBOSE = 'V'
 
-    def __admit(self,  *args, **kwargs):
+    def __admit(self, *args, **kwargs):
         kw = kwargs.copy()
 
         lv = kw.pop('level')
@@ -22,7 +23,7 @@ class Log(object):
             'I': 1,
             'V': 0,
         }
-        return priority[lv] >= priority[self.filter] and len(args) > 0
+        return priority[lv] >= priority[self.filter]
 
     def __args(self, lv, *args, **kw):
         t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -35,7 +36,7 @@ class Log(object):
         return a
 
     def __print(self, *args, **kw):
-        if not self.__admit( *args, **kw):
+        if not self.__admit(*args, **kw):
             return
 
         a = self.__args(kw.pop('level'), *args, **kw)
@@ -43,11 +44,16 @@ class Log(object):
         if "write" in kw:
             w = kw.pop('write')
             if isinstance(w, bool):
-                path = 'default.log'
+                if w:
+                    path = 'default.log'
+                else:
+                    print(*a, **kw)
+                    return
             else:
                 path = w
             with open(path, 'a', encoding='utf-8') as f:
                 print(*a, file=f, **kw)
+
         print(*a, **kw)
 
     def f(self, *args, **kw):
@@ -81,4 +87,17 @@ class Log(object):
         self.filter = self.VERBOSE
 
 
+class Jinja(object):
+    def __init__(self):
+        path = 'template'
+        loader = FileSystemLoader(path)
+        self.env = Environment(loader=loader)
+
+    def template(self, *args, **kwargs):
+        path = args[0]
+        t = self.env.get_template(path)
+        return t.render(*args[1:], **kwargs)
+
+
 log = Log()
+jinja = Jinja()

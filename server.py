@@ -4,6 +4,8 @@ from request import Request
 from utils import log
 from route.blog import route_dict as route_blog
 
+TAG = 'server'
+
 
 def route_a():
     pass
@@ -16,7 +18,8 @@ def route_404(request):
 def response_for_path(request):
     routes = {}
     routes.update(route_blog())
-    route = routes.get(request, route_404)
+    log.d(TAG, request.path)
+    route = routes.get(request.path, route_404)
     return route(request)
 
 
@@ -29,11 +32,12 @@ def server_run(host='', port=3000):
             s.listen(5)
             conn, address = s.accept()
             log.i("conn is {} , address is {}".format(conn, address), write=True)
-            request = Request.build(conn.recv(1024))
+            r = conn.recv(1024)
+            if len(r) > 0:
+                request = Request.build(r)
 
-            log.i("request is {} ".format(request))
+                log.i("request is {} ".format(request))
 
-            if len(request.raw_data) > 0:
                 response = response_for_path(request)
                 conn.sendall(response)
             else:

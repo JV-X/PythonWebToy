@@ -20,26 +20,52 @@ class Request(object):
 
     @classmethod
     def build(cls, request):
-        """
-        build Request object by bytes
-        :param request: bytes from socket
-        :return: a Request object
-        """
-        r = request.decode("utf-8")
-        request = Request()
+        raw = request.decode("utf-8")
+        r = Request()
 
-        request.raw_data = r
-        header, request.body = r.split('\r\n\r\n', 1)  # only once, \r\n\r\n may exist in body
+        r.raw_data = raw
+        log.d("xxx raw_data is \n" + r.raw_data)
+        header, r.body = raw.split('\r\n\r\n', 1)
         h = header.split('\r\n')
-        first_line = h.pop(0)
-        log.d(first_line)
-        for line in h:
-            log.d("line is {}".format(line))
-            e = line.split(':')
-            request.headers[e[0]] = e[1]
 
         parts = h[0].split()
-        request.path = parts[1]
-        request.method = parts[0]
-        # request.query = {} TODO :  2017.10.3  10:23
-        return request
+        path = parts[1]
+
+        r.method = parts[0]
+        Request.parse_path(path, r)
+        Request.add_headers(h[1:], r)
+        Request.add_cookies(r)
+
+        return r
+
+    @classmethod
+    def add_headers(cls, header, request):
+        lines = header
+        for line in lines:
+            k, v = line.split(': ', 1)
+            request.headers[k] = v
+
+    @classmethod
+    def parse_path(cls, path, request):
+        index = path.find('?')
+        if index == -1:
+            request.path = path
+            request.query = {}
+        else:
+            path, query_string = path.split('?', 1)
+            args = query_string.split('&')
+            query = {}
+            for arg in args:
+                k, v = arg.split('=')
+                query[k] = v
+            request.path = path
+            request.query = query
+
+    @classmethod
+    def add_cookies(cls, request):
+        cookies = request.headers.get('Cookie', '')
+        kvs = cookies.split('; ')
+        for kv in kvs:
+            if '=' in kv:
+                k, v = kv.split('=')
+                request.cookies[k] = v
