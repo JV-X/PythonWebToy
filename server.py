@@ -3,6 +3,7 @@ import socket
 from request import Request
 from utils import log
 from route.blog import route_dict as route_blog
+from route.static import route_dict as route_static
 
 TAG = 'server'
 
@@ -18,6 +19,7 @@ def route_404(request):
 def response_for_path(request):
     routes = {}
     routes.update(route_blog())
+    routes.update(route_static())
     log.d(TAG, request.path)
     route = routes.get(request.path, route_404)
     return route(request)

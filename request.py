@@ -11,6 +11,7 @@ class Request(object):
         self.headers = {}
         self.path = ''
         self.query = {}
+        self.cookies = {}
         self.body = ''
 
     def __repr__(self):
