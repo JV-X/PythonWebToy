@@ -3,7 +3,7 @@ from route import http_response as response
 
 
 def index(request):
-    body = j.template("blog/index.html", homepage='127.0.0.1:2000',owner="XJV")
+    body = j.template("blog/index.html", homepage='127.0.0.1:2000', owner="XJV")
     return response(body)
 
 
@@ -50,13 +50,13 @@ class Journal(object):
 
 def journal(request):
     a = Journal.all()
-    body = j.template("blog/journal.html", journals=a, homepage='127.0.0.1:2000',owner="XJV")
+    body = j.template("blog/journal.html", journals=a, homepage='127.0.0.1:2000', owner="XJV")
     log.d("journal", "body is \n{}".format(body))
     return response(body)
 
 
 def about(request):
-    body = j.template("blog/about.html", homepage='127.0.0.1:2000',owner="XJV")
+    body = j.template("blog/about.html", homepage='127.0.0.1:2000', owner="XJV")
     log.d("about", "body is \n{}".format(body))
     return response(body)
 
