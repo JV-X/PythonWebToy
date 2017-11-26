@@ -1,21 +1,22 @@
-from utils import jinja as j, log
+from utils import jinja, log
 from route import http_response as response
 
 
 def index(request):
-    body = j.template("blog/index.html", homepage='127.0.0.1:2000', owner="XJV")
+    body = jinja.template("blog/index.html", homepage='127.0.0.1:2000', owner="XJV")
     return response(body)
 
 
 class Journal(object):
     def __init__(self, date='',
                  display_date='', year='',
-                 name='', display_name=''):
+                 name='', display_name='', content=''):
         self.date = date
         self.display_date = display_date
         self.year = year
         self.name = name
         self.display_name = display_name
+        self.content = content
 
     @staticmethod
     def all():
@@ -73,14 +74,20 @@ class Journal(object):
 
 
 def journal(request):
-    a = Journal.all()
-    body = j.template("blog/journal.html", journals=a, homepage='127.0.0.1:2000', owner="XJV")
+    j = Journal()
+    body = jinja.template("blog/journal.html", journal=j)
     log.d("journal", "body is \n{}".format(body))
     return response(body)
 
 
+def journals(request):
+    a = Journal.all()
+    body = jinja.template("blog/journals.html", journals=a, homepage='127.0.0.1:2000', owner="XJV")
+    log.d("journal", "body is \n{}".format(body))
+    return response(body)
+
 def about(request):
-    body = j.template("blog/about.html", homepage='127.0.0.1:2000', owner="XJV")
+    body = jinja.template("blog/about.html", homepage='127.0.0.1:2000', owner="XJV")
     log.d("about", "body is \n{}".format(body))
     return response(body)
 
@@ -89,6 +96,7 @@ def route_dict():
     r = {
         "/": index,
         "/journal": journal,
+        "/journals": journals,
         "/about": about,
     }
     return r

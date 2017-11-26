@@ -1,73 +1,77 @@
 <!DOCTYPE html>
-<!-- saved from url=(0028)http://chrismoylan.com/about -->
 <html lang="en"
       class=" js flexbox canvas canvastext webgl touch geolocation postmessage websqldatabase no-indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta http-equiv="X-UA-Compatible" content="">
 
-    <title>About | {{homepage}}</title>
+    <title>Journal | {{homepage}}</title>
 
-    <meta name="description" content="About the author">
+    <meta name="description" content="Journal of author">
     <meta name="author" content="{{owner}}">
     <meta name="viewport" content="width=device-width">
 
 
     <link rel="stylesheet" href="/static?file=reset.css">
-    <!--link rel="stylesheet" href="/media/css/normalize.css"-->
     <link rel="stylesheet" href="/static?file=site.css">
     <link rel="stylesheet" href="/static?file=syntax.css">
     <link rel="stylesheet" href="/static?file=mobile.css"
           media="only screen and (max-device-width: 600px)">
     <script src="/static?file=modernizr-1.7.min.js.download"></script>
 </head>
-<body id="about">
+<body id="journal">
 <div class="wrapper">
 
     <header class="top banner cf">
+
         <div class="inner">
+
             <div class="left">
                 <a href="http://{{homepage}}/" title="home" class="logo">{{owner}}</a>
             </div>
 
             <nav class="main-nav">
                 <ul>
+
                     <li class="nav-item">
                         <a title="Journal" class="button white journal nav-link" href="http://{{homepage}}/journals">journal</a>
                     </li>
+
                     <li class="nav-item">
-                        <a title="About" class="button white active about nav-link" href="http://{{homepage}}/about">about</a>
+                        <a title="About" class="button white about nav-link" href="http://{{homepage}}/about">about</a>
                     </li>
+
                 </ul>
             </nav>
+
         </div>
+
     </header>
 
     <section class="inner main">
         <header>
-            <h1>About</h1>
+            <h1>Journal</h1>
             <nav class="journal breadcrumb">
                 <a href="http://{{homepage}}/">Home</a>
                 »
-                About
+                Journal
             </nav>
         </header>
 
-        <p>I got into computers at a young age. I thought they were really interesting and
-            liked the challenges they presented. I fell into programming while I was trying
-            to become a writer in college. When I’m not behind a keyboard I read, make music
-            or take pictures. I also do some cooking here and&nbsp;there.</p>
-        <p>I am currently a Android developer for
-            <a href="http://www.starcor.com/ch/index.html">Starcor</a>. Before that I worked at
-            <a href="http://www.ctg.ha.cn:6600/">REG</a> as a Construction Management Intern.</p>
-        <p>I have a strict father and mother (but I was a really naughty boy when I was young...), and I have two
-            sisters, I love them all.
-        </p>
-        <p>Like a growing number of my peers I find digital things convenient but boring.
-            I enjoy listening to music on live, play games on reality, and reading books
-            on paper. It is something of an irony that I make my living slinging bits. Maybe
-            one day we’ll figure out how to put the Internet onto something&nbsp;analog.</p></section>
+        <ul class="journal listing clear">
+            {% for e in journals %}
+            <li>
+                <article>
+                    <time class="posted-time" datetime="{{e.date}}">
+                        {{e.display_date}}
+                    </time>
+                    &nbsp; - &nbsp;
+                    <a href="http://{{homepage}}/journals/{{e.name}}">{{e.display_name}}</a>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
 
     <!--<footer class="inner">-->
     <footer>
@@ -78,7 +82,7 @@
                         <a title="Journal" class="button white journal nav-link" href="http://{{homepage}}/journals">journal</a>
                     </li>
                     <li class="nav-item">
-                        <a title="About" class="button white active about nav-link" href="http://{{homepage}}/about">about</a>
+                        <a title="About" class="button white about nav-link" href="http://{{homepage}}/about">about</a>
                     </li>
                 </ul>
             </nav>
