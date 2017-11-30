@@ -92,11 +92,20 @@ def about(request):
     return response(body)
 
 
+def praetorian(request):
+    body = ""
+    if True:
+        body = jinja.template("blog/access_deny.html")
+    log.d("about", "body is \n{}".format(body))
+    return response(body)
+
+
 def route_dict():
     r = {
         "/": index,
         "/journal": journal,
         "/journals": journals,
         "/about": about,
+        "/praetorian": praetorian,
     }
     return r
