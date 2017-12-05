@@ -1,9 +1,10 @@
 from utils import jinja, log
 from route import http_response as response
+from config import config
 
 
 def index(request):
-    body = jinja.template("blog/index.html", homepage='127.0.0.1:2000', owner="XJV")
+    body = jinja.template("blog/index.html", homepage=config['homepage'], owner=config["owner"])
     return response(body)
 
 
@@ -82,12 +83,13 @@ def journal(request):
 
 def journals(request):
     a = Journal.all()
-    body = jinja.template("blog/journals.html", journals=a, homepage='127.0.0.1:2000', owner="XJV")
+    body = jinja.template("blog/journals.html", journals=a, homepage=config['homepage'], owner=config["owner"])
     log.d("journal", "body is \n{}".format(body))
     return response(body)
 
+
 def about(request):
-    body = jinja.template("blog/about.html", homepage='127.0.0.1:2000', owner="XJV")
+    body = jinja.template("blog/about.html", homepage=config['homepage'], owner=config["owner"])
     log.d("about", "body is \n{}".format(body))
     return response(body)
 

@@ -1,5 +1,6 @@
 import socket
 
+from config import config
 from request import Request
 from utils import log
 from route.blog import route_dict as route_blog
@@ -25,7 +26,9 @@ def response_for_path(request):
     return route(request)
 
 
-def server_run(host='', port=3000):
+def server_run():
+    host = config['host']
+    port = config['port']
     with socket.socket() as s:
         s.bind((host, port))
         log.i("host is {} , port is {}".format(host, port), write='log')
@@ -50,8 +53,5 @@ def server_run(host='', port=3000):
 
 
 if __name__ == '__main__':
-    config = {
-        "host": "0.0.0.0",
-        "port": 2000,
-    }
-    server_run(**config)
+
+    server_run()
