@@ -1,10 +1,15 @@
+import sys
+
+import os
+
 from utils import jinja, log
 from route import http_response as response
 from config import config
 
 
 def index(request):
-    body = jinja.template("blog/index.html", homepage=config['homepage'], owner=config["owner"])
+    file = "blog{}index.html".format(os.sep)
+    body = jinja.template(file, homepage=config['homepage'], owner=config["owner"])
     return response(body)
 
 
@@ -76,20 +81,23 @@ class Journal(object):
 
 def journal(request):
     j = Journal()
-    body = jinja.template("blog/journal.html", journal=j)
+    file = "blog{}journal.html".format(os.sep)
+    body = jinja.template(file, journal=j)
     log.d("journal", "body is \n{}".format(body))
     return response(body)
 
 
 def journals(request):
     a = Journal.all()
-    body = jinja.template("blog/journals.html", journals=a, homepage=config['homepage'], owner=config["owner"])
+    file = "blog{}journals.html".format(os.sep)
+    body = jinja.template(file, journals=a, homepage=config['homepage'], owner=config["owner"])
     log.d("journal", "body is \n{}".format(body))
     return response(body)
 
 
 def about(request):
-    body = jinja.template("blog/about.html", homepage=config['homepage'], owner=config["owner"])
+    file = "blog{}about.html".format(os.sep)
+    body = jinja.template(file, homepage=config['homepage'], owner=config["owner"])
     log.d("about", "body is \n{}".format(body))
     return response(body)
 
@@ -97,7 +105,8 @@ def about(request):
 def praetorian(request):
     body = ""
     if True:
-        body = jinja.template("blog/access_deny.html")
+        file = "blog{}access_deny.html".format(os.sep)
+        body = jinja.template(file)
     log.d("about", "body is \n{}".format(body))
     return response(body)
 
