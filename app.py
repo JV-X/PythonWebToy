@@ -1,5 +1,11 @@
 import socket
 
+import atexit
+
+import sys
+
+import signal
+
 from config import config
 from request import Request
 from utils import log
@@ -52,6 +58,12 @@ def server_run():
             conn.close()
 
 
-if __name__ == '__main__':
+def on_exit(signum=0, e=0):
+    print("bye..")
 
+
+if __name__ == '__main__':
+    atexit.register(on_exit)
+    print(sys.argv)
+    signal.signal(int(sys.argv[1]), on_exit)
     server_run()
