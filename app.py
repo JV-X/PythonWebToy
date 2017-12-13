@@ -1,10 +1,8 @@
 import socket
 
-import atexit
-
 import sys
 
-import signal
+from os.path import dirname, abspath
 
 from config import config
 from request import Request
@@ -58,5 +56,10 @@ def server_run():
             conn.close()
 
 
+def init():
+    sys.path.insert(0, abspath(dirname(__file__)))
+
+
 if __name__ == '__main__':
+    init()
     server_run()
