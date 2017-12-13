@@ -1,8 +1,6 @@
 import socket
 
-import sys
-
-from os.path import dirname, abspath
+import os
 
 from config import config
 from request import Request
@@ -57,7 +55,8 @@ def server_run():
 
 
 def init():
-    sys.path.insert(0, abspath(dirname(__file__)))
+    print("pwd {}".format(os.getcwd()))
+    os.chdir("/root/web-app/PythonWebToy")
 
 
 if __name__ == '__main__':
