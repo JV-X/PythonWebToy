@@ -58,12 +58,5 @@ def server_run():
             conn.close()
 
 
-def on_exit(signum=0, e=0):
-    print("bye..")
-
-
 if __name__ == '__main__':
-    atexit.register(on_exit)
-    print(sys.argv)
-    signal.signal(int(sys.argv[1]), on_exit)
     server_run()
