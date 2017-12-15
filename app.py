@@ -1,14 +1,13 @@
+import platform
 import socket
 
 import os
 
-from config import config
+import config
 from request import Request
 from utils import log
 from route.blog import route_dict as route_blog
 from route.static import route_dict as route_static
-
-TAG = 'server'
 
 
 def route_a():
@@ -23,14 +22,14 @@ def response_for_path(request):
     routes = {}
     routes.update(route_blog())
     routes.update(route_static())
-    log.d(TAG, request.path)
+    log.d('response_for_path', request.path)
     route = routes.get(request.path, route_404)
     return route(request)
 
 
 def server_run():
-    host = config['host']
-    port = config['port']
+    host = config.config['host']
+    port = config.config['port']
     with socket.socket() as s:
         s.bind((host, port))
         log.i("host is {} , port is {}".format(host, port), write='log')
@@ -55,10 +54,18 @@ def server_run():
 
 
 def init():
-    print("pwd {}".format(os.getcwd()))
-    os.chdir("/root/web-app/PythonWebToy")
+    _sys = platform.system()
+    print(_sys)
+    if _sys == "Linux":
+        os.chdir("/root/web-app/PythonWebToy")
+        config.config = config.server
+    elif _sys == "Windows":
+        config.config = config.local
+    else:
+        pass
 
 
 if __name__ == '__main__':
     init()
+    print(config.config)
     server_run()
