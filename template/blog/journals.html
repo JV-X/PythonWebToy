@@ -1,6 +1,10 @@
 {% extends "blog/base.html" %}
 {% block title %}Journal | {{owner}}{% endblock %}
 
+{% block script%}
+    <script src='static/js?file=journals.js'></script>
+{% endblock %}
+
 {% block body %}
     <section class="inner main">
         <header>

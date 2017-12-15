@@ -2,7 +2,6 @@ import platform
 import socket
 
 import os
-import atexit
 
 import config
 from request import Request

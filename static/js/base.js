@@ -1,8 +1,8 @@
 var log = function() {
-    console.log.bind(console, arguments)
+    console.log.apply(console, arguments)
 }
 
-var e = function(sel) {
+var element = function(sel) {
     return document.querySelector(sel)
 }
 

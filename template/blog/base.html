@@ -18,7 +18,10 @@
     <link rel="stylesheet" href="/static/css?file=mobile.css"
           media="only screen and (max-device-width: 600px)">
     <script src="/static/js?file=modernizr-1.7.min.js.download"></script>
-    <script src="{% block script %}{% endblock %}"></script>
+    <script src='static/js?file=base.js'></script>
+
+    {% block script %}{% endblock %}
+
 </head>
 <body id="index">
 
@@ -49,28 +52,29 @@
 {% endblock %}
 
 
-    <!--<footer class="inner">-->
-    <footer>
-        <div class="inner">
-            <nav class="footer-nav">
-                <ul>
-                    <li class="nav-item">
-                        <a title="Journal" class="button white journal nav-link" href="http://{{homepage}}/journals">journal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a title="About" class="button white about nav-link"
-                           href="http://{{homepage}}/about">about</a>
-                    </li>
-                </ul>
-            </nav>
+<!--<footer class="inner">-->
+<footer>
+    <div class="inner">
+        <nav class="footer-nav">
+            <ul>
+                <li class="nav-item">
+                    <a title="Journal" class="button white journal nav-link"
+                       href="http://{{homepage}}/journals">journal</a>
+                </li>
+                <li class="nav-item">
+                    <a title="About" class="button white about nav-link"
+                       href="http://{{homepage}}/about">about</a>
+                </li>
+            </ul>
+        </nav>
 
-        </div>
-    </footer>
+    </div>
+</footer>
 
-    <!--[if lt IE 7 ]>
-    <script src="js/libs/dd_belatedpng.js"></script>
-    <script>DD_belatedPNG.fix('img, .png_bg');</script>
-    <![endif]-->
+<!--[if lt IE 7 ]>
+<script src="js/libs/dd_belatedpng.js"></script>
+<script>DD_belatedPNG.fix('img, .png_bg');</script>
+<![endif]-->
 
 
 </div> <!-- wrapper -->
