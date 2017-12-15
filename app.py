@@ -2,6 +2,7 @@ import platform
 import socket
 
 import os
+import atexit
 
 import config
 from request import Request
@@ -22,7 +23,7 @@ def response_for_path(request):
     routes = {}
     routes.update(route_blog())
     routes.update(route_static())
-    log.d('response_for_path', request.path)
+
     route = routes.get(request.path, route_404)
     return route(request)
 
@@ -31,6 +32,7 @@ def server_run():
     host = config.config['host']
     port = config.config['port']
     with socket.socket() as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, port))
         log.i("host is {} , port is {}".format(host, port), write='log')
 
@@ -55,7 +57,6 @@ def server_run():
 
 def init():
     _sys = platform.system()
-    print(_sys)
     if _sys == "Linux":
         os.chdir("/root/web-app/PythonWebToy")
         config.config = config.server
