@@ -4,7 +4,6 @@ import sys
 from os.path import abspath
 from os.path import dirname
 
-# for Apache
 sys.path.insert(0, abspath(dirname(__file__)))
 
 import app
