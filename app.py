@@ -10,15 +10,12 @@ from route.blog import route_dict as route_blog
 from route.static import route_dict as route_static
 
 
-def route_a():
-    pass
-
-
 def route_404(request):
     return b"HTTP/1.1 200 OK\r\n\r\n<h1>404</h1>"
 
 
 def response_for_path(request):
+    log.i("request is {} ".format(request))
     routes = {}
     routes.update(route_blog())
     routes.update(route_static())
@@ -42,9 +39,6 @@ def server_run():
             r = conn.recv(1024)
             if len(r) > 0:
                 request = Request.build(r)
-
-                log.i("request is {} ".format(request))
-
                 response = response_for_path(request)
                 conn.sendall(response)
             else:
