@@ -126,6 +126,7 @@ class Model(object):
 
     def save(self):
         name = self.__class__.__name__
+        self.__dict__['deleted'] = False
         log.i("on save {}".format(self.__dict__))
         db_client.db[name].save(self.__dict__)
 
@@ -135,11 +136,13 @@ class Model(object):
             'id': self.id,
         }
         values = {
-            'deleted': True
+            'deleted': True,
+            'updated_time': timestamp(),
         }
         db_client.db[name].update_one(query, values)
 
-    def blacklist(self):
+    @classmethod
+    def blacklist(cls):
         b = [
             '_id',
         ]
