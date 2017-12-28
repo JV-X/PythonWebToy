@@ -1,11 +1,21 @@
 {% extends "blog/base.html" %}
 {% block title %}{{journal.title}} | {{owner}}{% endblock %}
 
-<section class="inner main">
-    <article class="post journal">
-        <p>
-            {{journal.content}}
-        </p>
-    </article>
+{% block script_head %}
+<script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+{% endblock %}
 
-</section>
+{% block body %}
+<div class="css-lib-center-block css-lib-block">
+    <h1 id="id-journal-title" class="css-lib-center">
+        {{journal.title}}
+    </h1>
+    <div id="id-journal-content" class="markdown-body">
+        {{journal.content}}
+    </div>
+</div>
+{% endblock %}
+
+{% block script_end %}
+<script src="/static/js?file=journal.js"></script>
+{% endblock %}
