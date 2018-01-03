@@ -11,7 +11,7 @@
     <meta name="description" content="{% block desc %}{% endblock %}">
     <meta name="author" content="{{owner}}">
     <meta name="viewport" content="width=device-width">
-{% block script_head %}{% endblock %}
+    {% block script_head %}{% endblock %}
 
 
 </head>
@@ -72,8 +72,12 @@
 </div> <!-- wrapper -->
 
 <div class="praetorians">
-    <a href="http://{{homepage}}/praetorian">π</a>
+    <input type="file"  id="id-praetorian"/>
+    <label for="id-praetorian"><span>π</span></label>
 </div>
+<!--<div class="praetorians">-->
+<!--<a id="id-praetorians" href="http://{{homepage}}/praetorian">π</a>-->
+<!--</div>-->
 
 </body>
 
@@ -85,6 +89,7 @@
 <link rel="stylesheet" href="/static/css?file=github-markdown.css">
 <link rel="stylesheet" href="/static/css?file=css-lib.css">
 <script src="/static/js?file=modernizr-1.7.min.js.download"></script>
+<script src='static/js?file=js-lib.js'></script>
 <script src='static/js?file=base.js'></script>
 
 {% block script_end %}{% endblock %}

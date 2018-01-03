@@ -1,4 +1,4 @@
-var renderMarkDown = function() {
+var renderMarkdown = function() {
     var t = element('#id-journal-title')
     var c = element('#id-journal-content')
     var mt = marked(t.innerHTML)
@@ -9,7 +9,7 @@ var renderMarkDown = function() {
 }
 
 var __main = function() {
-    renderMarkDown()
+    renderMarkdown()
 }
 
 __main()

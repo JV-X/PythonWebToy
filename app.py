@@ -61,5 +61,4 @@ def init():
 
 if __name__ == '__main__':
     init()
-    print(config.config)
     server_run()
