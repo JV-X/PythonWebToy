@@ -4,7 +4,7 @@ from route import http_response as response
 
 def auth(request):
     key = request.body
-    log("doAuth, key is {}".format(key))
+    log.d("doAuth, key is {}".format(key))
 
     if check_authorized(key):
         body = "<h1>233</h1>"
