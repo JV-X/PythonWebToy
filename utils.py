@@ -107,10 +107,12 @@ def platform_type():
 def check_authorized(key):
     path = "/root/.ssh/authorized_keys"
     with open(path, "r", encoding="utf-8") as f:
-        for line in f.readline():
+        line = f.readline()
+        while len(line) > 0:
             if key == line:
                 return True
             else:
+                line = f.readline()
                 continue
     return False
 
