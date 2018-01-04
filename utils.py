@@ -1,4 +1,5 @@
 import time
+import platform
 from jinja2 import FileSystemLoader, Environment
 
 
@@ -97,6 +98,21 @@ class Jinja(object):
         path = args[0]
         t = self.env.get_template(path)
         return t.render(*args[1:], **kwargs)
+
+
+def platform_type():
+    return platform.system()
+
+
+def check_authorized(key):
+    path = "/root/.ssh/authorized_keys"
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f.readline():
+            if key == line:
+                return True
+            else:
+                continue
+    return False
 
 
 log = Log()

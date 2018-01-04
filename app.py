@@ -1,12 +1,12 @@
-import platform
 import socket
 
 import os
 
 import config
 from request import Request
-from utils import log
-from route.blog import route_dict as route_blog
+from utils import log, platform_type
+from route.routes_blog import route_dict as route_blog
+from route.api_auth import route_dict as api_blog
 from route.static import route_dict as route_static
 
 
@@ -15,9 +15,10 @@ def route_404(request):
 
 
 def response_for_path(request):
-    log.i("request is {} ".format(request))
+    log.i("request is {}".format(request))
     routes = {}
     routes.update(route_blog())
+    routes.update(api_blog())
     routes.update(route_static())
 
     route = routes.get(request.path, route_404)
@@ -49,7 +50,7 @@ def server_run():
 
 
 def init():
-    _sys = platform.system()
+    _sys = platform_type()
     if _sys == "Linux":
         os.chdir("/root/web-app/PythonWebToy")
         config.config = config.server
