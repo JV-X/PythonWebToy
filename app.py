@@ -49,7 +49,7 @@ def server_run():
             conn.close()
 
 
-def init():
+def init():  # 临时处理, 解决服务器上工作路径不对导致的问题
     _sys = platform_type()
     if _sys == "Linux":
         os.chdir("/root/web-app/PythonWebToy")

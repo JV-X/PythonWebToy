@@ -119,3 +119,4 @@ def check_authorized(key):
 
 log = Log()
 jinja = Jinja()
+session = []

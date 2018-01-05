@@ -1,6 +1,8 @@
 import json
+import uuid
 
-from utils import jinja, log, check_authorized
+from utils import jinja, log, check_authorized, session
+
 from route import http_response as response
 
 
@@ -9,11 +11,12 @@ def auth(request):
     log.d("doAuth, key is {}".format(key))
 
     if check_authorized(key):
-        body = "<h1>233</h1>"
+        s = uuid.uuid4()
+        session.append(s)
+        return response("<h1>233</h1>", headers={"Set-Cookie": s})
     else:
         body = jinja.template("blog/access_deny.html")
-
-    return response(body)
+        return response(body)
 
 
 def route_dict():
