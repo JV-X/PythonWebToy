@@ -6,7 +6,7 @@ import config
 from request import Request
 from utils import log, platform_type
 from route.routes_blog import route_dict as route_blog
-from route.api_auth import route_dict as api_blog
+from route.api_admin import route_dict as api_blog
 from route.static import route_dict as route_static
 
 

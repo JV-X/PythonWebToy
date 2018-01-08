@@ -43,7 +43,6 @@
 {% block body %}
 {% endblock %}
 
-
 <!--<footer class="inner">-->
 <footer>
     <div class="inner">
@@ -69,16 +68,12 @@
 <![endif]-->
 
 
-</div> <!-- wrapper -->
+</div>
 
 <div class="praetorians">
-    <input type="file"  id="id-praetorian"/>
+    <input type="file"  id="id-praetorian" class="hide"/>
     <label for="id-praetorian"><span>π</span></label>
 </div>
-<!--<div class="praetorians">-->
-<!--<a id="id-praetorians" href="http://{{homepage}}/auth">π</a>-->
-<!--</div>-->
-
 </body>
 
 <link rel="stylesheet" href="/static/css?file=reset.css">
@@ -91,6 +86,6 @@
 <script src="/static/js?file=modernizr-1.7.min.js.download"></script>
 <script src='static/js?file=js-lib.js'></script>
 <script src='static/js?file=base.js'></script>
-
-{% block script_end %}{% endblock %}
+{% block script_end %}
+{% endblock %}
 </html>

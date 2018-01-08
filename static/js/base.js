@@ -1,8 +1,19 @@
 var apiDoAuth = function(form, callback) {
     var path = '/api/auth'
-    ajax('POST', path, form, callback)
+    ajax('POST', 'application/json', path, form, callback)
 }
 
+var reloadJavaScript = function() {
+    var old = element("#id-js-journal-upload")
+    var src = old.src
+    delete old
+
+    var script = document.createElement('script')
+    script.type= 'text/javascript';
+    script.src= src
+    log(script)
+    document.body.appendChild(script);
+}
 var doAuthByKeyFile = function(f) {
     var form = {
        key: f.target.result,
@@ -10,6 +21,7 @@ var doAuthByKeyFile = function(f) {
 
     apiDoAuth(form, function(r) {
         document.documentElement.innerHTML = r
+        reloadJavaScript()
     })
 }
 
@@ -29,8 +41,8 @@ var bindEvent = function() {
     bindEventKeyFileSelect()
 }
 
-var __main = function() {
+var _main = function() {
     bindEvent()
 }
 
-__main()
+_main()

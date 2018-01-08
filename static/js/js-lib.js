@@ -11,11 +11,11 @@ var time = function(timestamp) {
     return d.toLocaleString()
 }
 
-var ajax = function(method, path, data, responseCallback) {
+var ajax = function(method, type, path, data, responseCallback) {
     var r = new XMLHttpRequest()
 
     r.open(method, path, true)
-    r.setRequestHeader('Content-Type', 'application/json')
+    r.setRequestHeader('Content-Type', type)
     r.onreadystatechange = function() {
         if(r.readyState === 4) {
             responseCallback(r.response)

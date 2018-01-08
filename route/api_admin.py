@@ -13,7 +13,8 @@ def auth(request):
     if check_authorized(key):
         s = uuid.uuid4()
         session.append(s)
-        return response("<h1>233</h1>", headers={"Set-Cookie": s})
+        body = jinja.template("blog/journal_upload.html")
+        return response(body, headers={"Set-Cookie": s})
     else:
         body = jinja.template("blog/access_deny.html")
         return response(body)
