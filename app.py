@@ -56,7 +56,8 @@ def process_request(conn):
 
     request = Request.build(r)
     response = response_for_path(request)
-    conn.sendall(response)
+    if response is not None:
+        conn.sendall(response)
     conn.close()
 
 
