@@ -23,7 +23,13 @@ def auth(request):
 
 def api_upload(request):
     form = json.loads(request.body)
-    Journal.new(form)
+    j = Journal.find_by(title=form["title"])[0]
+
+    if j is None:
+        j = Journal.new(form)
+        j.save()
+    else:
+        j.update(form)
 
 
 def route_dict():

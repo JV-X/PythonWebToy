@@ -74,7 +74,6 @@ class Model(object):
         ts = timestamp()
         m.created_time = ts
         m.updated_time = ts
-        m.save()
         return m
 
     @classmethod
@@ -96,7 +95,6 @@ class Model(object):
     def all(cls, **kwargs):
         return cls._find(**kwargs)
 
-    #  还应该有一个函数 find(name, **kwargs)
     @classmethod
     def _find(cls, **kwargs):
         name = cls.__name__
@@ -139,7 +137,32 @@ class Model(object):
             'deleted': True,
             'updated_time': timestamp(),
         }
-        db_client.db[name].update_one(query, values)
+        set = {
+            '$set': values
+        }
+        db_client.db[name].update_one(query, set)
+
+    def update(self, form):
+        name = self.__class__.__name__
+        changed = False
+        query = {
+            'id': self.id,
+        }
+        values = {
+            'updated_time': timestamp(),
+        }
+        set = {
+            '$set': values
+        }
+        for k in form:
+            if k not in self.__dict__.keys() or form[k] != self.__dict__[k]:
+                changed = True
+                values[k] = form[k]
+            else:
+                continue
+
+        if changed:
+            db_client.db[name].update_one(query, set)
 
     @classmethod
     def blacklist(cls):
