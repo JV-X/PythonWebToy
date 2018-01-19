@@ -25,3 +25,11 @@ var ajax = function(method, type, path, data, responseCallback) {
 
     r.send(data)
 }
+
+var replaceNewLineCharacter = function(s) {
+    return replaceAll(replaceAll(replaceAll(s,"\r\n","<br>"),"\n","<br>"),"\r","<br>")
+}
+
+var replaceAll = function(s, search, replacement) {
+    return s.replace(new RegExp(search, 'g'), replacement)
+}

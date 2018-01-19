@@ -11,3 +11,7 @@ class Journal(Model):
             ('content', str, ''),
         ]
         return names
+
+    @classmethod
+    def from_file(cls, content):
+        pass

@@ -1,6 +1,7 @@
 import json
 import uuid
 
+from model.journal import Journal
 from utils import jinja, log, check_authorized, session
 
 from route import http_response as response
@@ -20,8 +21,14 @@ def auth(request):
         return response(body)
 
 
+def api_upload(request):
+    form = json.loads(request.body)
+    Journal.new(form)
+
+
 def route_dict():
     r = {
         "/api/auth": auth,
+        "/api/upload": api_upload,
     }
     return r
