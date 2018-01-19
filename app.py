@@ -2,6 +2,8 @@ import socket
 
 import os
 
+import _thread
+
 import config
 from request import Request
 from utils import log, platform_type
@@ -32,21 +34,30 @@ def server_run():
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, port))
         log.i("host is {} , port is {}".format(host, port), write='log')
+        s.listen(5)
 
         while True:
-            s.listen(5)
             conn, address = s.accept()
             log.i("conn is {} , address is {}".format(conn, address), write=True)
-            r = conn.recv(1024)
-            if len(r) > 0:
-                request = Request.build(r)
-                response = response_for_path(request)
-                conn.sendall(response)
-            else:
-                # sometimes chrome will send empty request
-                log.d("get a empty request")
+            _thread.start_new_thread(process_request, (conn,))
 
-            conn.close()
+
+def process_request(conn):
+    buffer_size = 1024
+    r = b""
+    buffer = conn.recv(buffer_size)
+    while True:
+        r += buffer
+        if len(buffer) < buffer_size:
+            break
+        else:
+            buffer = conn.recv(buffer_size)
+            log.d("len(buffer) >= buffer_size")
+
+    request = Request.build(r)
+    response = response_for_path(request)
+    conn.sendall(response)
+    conn.close()
 
 
 def init():  # 临时处理, 解决服务器上工作路径不对导致的问题
