@@ -9,6 +9,10 @@ def timestamp():
     return int(time.time())
 
 
+def replace_new_line_character(s):
+    return s.replace("<br>", "\r\n")
+
+
 db_client = MongoClient()
 
 

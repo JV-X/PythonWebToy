@@ -3,6 +3,8 @@ from utils import jinja, log
 from route import http_response as response
 import config
 
+TAG = "routes_blog"
+
 
 def index(request):
     body = jinja.template("blog/index.html", homepage=config.config['homepage'], owner=config.config["owner"])
@@ -10,9 +12,9 @@ def index(request):
 
 
 def journal(request):
-    j = Journal()  # TODO
+    id = request.query['id']
+    j = Journal.find_by_id(id)
     body = jinja.template("blog/journal.html", journal=j, owner=config.config["owner"])
-    log.d("journal", "body is \n{}".format(body))
     return response(body)
 
 

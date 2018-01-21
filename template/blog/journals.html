@@ -20,11 +20,11 @@
             {% for e in journals %}
             <li>
                 <article>
-                    <time class="posted-time" datetime="{{e.date}}">
-                        {{e.display_date}}
+                    <time class="posted-time" datetime="{{e.updated_time}}">
+                        {{e.updated_time}}
                     </time>
                     &nbsp; - &nbsp;
-                    <a href="http://{{homepage}}/journal?name={{e.name}}">{{e.display_name}}</a>
+                    <a href="http://{{homepage}}/journal?id={{e.id}}">{{e.title}}</a>
                 </article>
             </li>
             {% endfor %}
