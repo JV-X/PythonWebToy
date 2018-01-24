@@ -1,12 +1,12 @@
 {% extends "blog/base.html" %}
-{% block title %}About | {{owner}}{% endblock %}
+{% block title %}About | {{config.owner}}{% endblock %}
 
 {% block body %}
     <section class="inner main">
         <header>
             <h1>About</h1>
             <nav class="journal breadcrumb">
-                <a href="http://{{homepage}}/">Home</a>
+                <a href="http://{{config.homepage}}/">Home</a>
                 »
                 About
             </nav>

@@ -1,5 +1,5 @@
 {% extends "blog/base.html" %}
-{% block title %}Journal | {{owner}}{% endblock %}
+{% block title %}Journal | {{config.owner}}{% endblock %}
 
 {% block script%}
     <script src='static/js?file=journals.js'></script>
@@ -10,7 +10,7 @@
         <header>
             <h1>Journal</h1>
             <nav class="journal breadcrumb">
-                <a href="http://{{homepage}}/">Home</a>
+                <a href="http://{{config.homepage}}/">Home</a>
                 »
                 Journal
             </nav>
@@ -24,7 +24,7 @@
                         {{e.updated_time}}
                     </time>
                     &nbsp; - &nbsp;
-                    <a href="http://{{homepage}}/journal?id={{e.id}}">{{e.title}}</a>
+                    <a href="http://{{config.homepage}}/journal?id={{e.id}}">{{e.title}}</a>
                 </article>
             </li>
             {% endfor %}

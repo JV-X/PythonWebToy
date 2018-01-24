@@ -1,5 +1,5 @@
 {% extends "blog/base.html" %}
-{% block title %}Welcome | {{owner}}{% endblock %}
+{% block title %}Welcome | {{config.owner}}{% endblock %}
 
 {% block body %}
 <section class="inner main">
@@ -7,7 +7,7 @@
         <header>
             <h1>Welcome</h1>
             <nav class="journal breadcrumb">
-                <a href="http://{{homepage}}/">Home</a>
+                <a href="http://{{config.homepage}}/">Home</a>
                 »
                 Welcome
             </nav>

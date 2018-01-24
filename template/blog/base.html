@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0023)http://{{homepage}}/ -->
 <html lang="en"
       class=" js flexbox canvas canvastext webgl touch geolocation postmessage websqldatabase no-indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
 <head>
@@ -9,7 +8,7 @@
     <title>{% block title%}{% endblock %}</title>
 
     <meta name="description" content="{% block desc %}{% endblock %}">
-    <meta name="author" content="{{owner}}">
+    <meta name="author" content="{{config.owner}}">
     <meta name="viewport" content="width=device-width">
     {% block script_head %}{% endblock %}
 
@@ -21,18 +20,18 @@
     <div class="inner">
 
         <div class="left">
-            <a href="http://{{homepage}}/" title="home" class="logo">{{owner}}</a>
+            <a href="http://{{config.homepage}}/" title="home" class="logo">{{config.owner}}</a>
         </div>
 
         <nav class="main-nav">
             <ul>
                 <li class="nav-item">
                     <a title="Journal" class="button white journal nav-link"
-                       href="http://{{homepage}}/journals">journal</a>
+                       href="http://{{config.homepage}}/journals">journal</a>
                 </li>
                 <li class="nav-item">
                     <a title="About" class="button white about nav-link"
-                       href="http://{{homepage}}/about">about</a>
+                       href="http://{{config.homepage}}/about">about</a>
                 </li>
             </ul>
         </nav>
@@ -50,11 +49,11 @@
             <ul>
                 <li class="nav-item">
                     <a title="Journal" class="button white journal nav-link"
-                       href="http://{{homepage}}/journals">journal</a>
+                       href="http://{{config.homepage}}/journals">journal</a>
                 </li>
                 <li class="nav-item">
                     <a title="About" class="button white about nav-link"
-                       href="http://{{homepage}}/about">about</a>
+                       href="http://{{config.homepage}}/about">about</a>
                 </li>
             </ul>
         </nav>
