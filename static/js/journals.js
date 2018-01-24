@@ -1,4 +1,4 @@
-var _main = function(){
+function _main() {
     log('hello js')
 }
 

@@ -1,9 +1,9 @@
-var apiDoAuth = function(form, callback) {
+function apiDoAuth(form, callback) {
     var path = '/api/auth'
     ajax('POST', 'application/json', path, form, callback)
 }
 
-var reloadJavaScript = function() {
+function reloadJavaScript() {
     var old = element("#id-js-journal-upload")
     var src = old.src
     delete old
@@ -14,7 +14,8 @@ var reloadJavaScript = function() {
     log(script)
     document.body.appendChild(script);
 }
-var doAuthByKeyFile = function(f) {
+
+function doAuthByKeyFile(f) {
     var form = {
        key: f.target.result,
     }
@@ -25,11 +26,12 @@ var doAuthByKeyFile = function(f) {
     })
 }
 
-var bindEventKeyFileSelect = function() {
+function bindEventKeyFileSelect() {
     var onKeyFileSelected = function() {
         var f = this.files[0]
         var r = new FileReader();
         r.onload = doAuthByKeyFile
+
         r.readAsText(f);
     }
     var p = element('#id-praetorian')
@@ -37,11 +39,11 @@ var bindEventKeyFileSelect = function() {
     p.addEventListener('change', onKeyFileSelected, false)
 }
 
-var bindEvent = function() {
+function bindEvent() {
     bindEventKeyFileSelect()
 }
 
-var _main = function() {
+function _main() {
     bindEvent()
 }
 

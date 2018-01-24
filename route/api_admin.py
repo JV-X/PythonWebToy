@@ -1,6 +1,7 @@
 import json
 import uuid
 
+import config
 from model.journal import Journal
 from utils import jinja, log, check_authorized, session
 
@@ -14,7 +15,7 @@ def auth(request):
     if check_authorized(key):
         s = uuid.uuid4()
         session.append(s)
-        body = jinja.template("blog/journal_upload.html")
+        body = jinja.template("blog/journal_upload.html", config=config.config)
         return response(body, headers={"Set-Cookie": s})
     else:
         body = jinja.template("blog/access_deny.html")
@@ -23,13 +24,13 @@ def auth(request):
 
 def api_upload(request):
     form = json.loads(request.body)
-    j = Journal.find_by(title=form["title"])[0]
+    js = Journal.find_by(title=form["title"])
 
-    if j is None:
+    if len(js) is 0:
         j = Journal.new(form)
         j.save()
     else:
-        j.update(form)
+        js[0].update(form)
 
 
 def route_dict():

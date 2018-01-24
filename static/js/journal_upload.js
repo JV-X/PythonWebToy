@@ -1,8 +1,9 @@
-var apiUpload = function(form, callback) {
+function apiUpload(form, callback) {
     var path = '/api/upload'
     ajax('POST','application/json', path, form, callback)
 }
-var parse_file = function(f) {
+
+function parse_file(f) {
     var raw =  f.target.result.split("<Separator1>")
     var config = raw[0]
     var cs = config.split("<Separator2>")
@@ -18,7 +19,7 @@ var parse_file = function(f) {
     return form
 }
 
-var doUploadFile = function(fileContent) {
+function doUploadFile(fileContent) {
     var form = parse_file(fileContent)
 
     apiUpload(form, function(p) {
@@ -26,7 +27,7 @@ var doUploadFile = function(fileContent) {
     })
 }
 
-var bindEventFileSelect = function() {
+function bindEventFileSelect() {
     var onFileSelected = function() {
         var f = this.files[0]
         var r = new FileReader();
@@ -37,12 +38,12 @@ var bindEventFileSelect = function() {
     p.addEventListener('change', onFileSelected, false)
 }
 
-var bindEvent = function() {
+function bindEvent() {
     bindEventFileSelect()
 }
 
-var __main = function() {
+function _main() {
     bindEvent()
 }
 
-__main()
+_main()

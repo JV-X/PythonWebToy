@@ -1,17 +1,17 @@
-var log = function() {
+function log() {
     console.log.apply(console, arguments)
 }
 
-var element = function(sel) {
+function element(sel) {
     return document.querySelector(sel)
 }
 
-var time = function(timestamp) {
+function time(timestamp) {
     var d = new Date(timestamp*1000)
     return d.toLocaleString()
 }
 
-var ajax = function(method, type, path, data, responseCallback) {
+function ajax(method, type, path, data, responseCallback) {
     var r = new XMLHttpRequest()
 
     r.open(method, path, true)
@@ -26,10 +26,10 @@ var ajax = function(method, type, path, data, responseCallback) {
     r.send(data)
 }
 
-var replaceNewLineCharacter = function(s) {
+function replaceNewLineCharacter(s) {
     return replaceAll(replaceAll(replaceAll(s,"\r\n","<br>"),"\n","<br>"),"\r","<br>")
 }
 
-var replaceAll = function(s, search, replacement) {
+function replaceAll(s, search, replacement) {
     return s.replace(new RegExp(search, 'g'), replacement)
 }
