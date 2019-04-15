@@ -117,6 +117,16 @@ def check_authorized(key):
     return False
 
 
+def static_txt(name):
+    """
+    静态资源的处理函数, 读取静态文件并生成响应返回
+    """
+    path = 'static/txt/' + name
+    with open(path, 'rb') as f:
+        binary = f.read()
+        return binary
+
+
 log = Log()
 jinja = Jinja()
 session = []

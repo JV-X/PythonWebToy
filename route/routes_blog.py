@@ -1,5 +1,5 @@
 from model.journal import Journal
-from utils import jinja, log
+from utils import jinja, log, static_txt
 from route import http_response as response
 import config
 
@@ -29,11 +29,20 @@ def about(request):
     return response(body)
 
 
+def for_melody(request):
+    j = Journal()
+    j.title = "张迪"
+    j.content = static_txt("1.md").decode(encoding='utf-8', errors='strict')
+    body = jinja.template("blog/journal.html", journal=j, config=config.config)
+    return response(body)
+
+
 def route_dict():
     r = {
         "/": index,
         "/journal": journal,
         "/journals": journals,
+        "/melody": for_melody,
         "/about": about,
     }
     return r

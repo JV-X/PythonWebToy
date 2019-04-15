@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import socket
 
 import os
@@ -69,7 +71,7 @@ def init():  # 临时处理, 解决服务器上工作路径不对导致的问题
     elif _sys == "Windows":
         config.config = config.local
     else:
-        pass
+        config.config = config.local
 
 
 if __name__ == '__main__':
