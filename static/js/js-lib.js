@@ -7,7 +7,7 @@ function element(sel) {
 }
 
 function time(timestamp) {
-    var d = new Date(timestamp*1000)
+    var d = new Date(timestamp)
     return d.toLocaleString()
 }
 

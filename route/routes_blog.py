@@ -37,6 +37,12 @@ def for_melody(request):
     return response(body)
 
 
+def pv(request):
+    log.i(request.body, write='pv.log')
+    print("xxx")
+    return response('HTTP/1.1 200 OK\r\n\r\n')
+
+
 def route_dict():
     r = {
         "/": index,
@@ -44,5 +50,7 @@ def route_dict():
         "/journals": journals,
         "/melody": for_melody,
         "/about": about,
+        "/pv": pv,
     }
+
     return r
