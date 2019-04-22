@@ -37,6 +37,17 @@ def for_melody(request):
     return response(body)
 
 
+def for_melody_1(request):
+    text = static_txt("4.md")
+
+    j = Journal()
+    j.title = "张迪"
+    j.content = text.decode(encoding='utf-8', errors='strict')
+
+    body = jinja.template("blog/journal.html", journal=j, config=config.config)
+    return response(body)
+
+
 def pv(request):
     log.i(request.body, write='pv.log')
     print("xxx")
@@ -49,6 +60,7 @@ def route_dict():
         "/journal": journal,
         "/journals": journals,
         "/melody": for_melody,
+        "/melody-1": for_melody_1,
         "/about": about,
         "/pv": pv,
     }
