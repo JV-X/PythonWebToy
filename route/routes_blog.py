@@ -41,7 +41,7 @@ def for_melody_1(request):
     text = static_txt("4.md")
 
     j = Journal()
-    j.title = "张迪"
+    j.title = "神秘感"
     j.content = text.decode(encoding='utf-8', errors='strict')
 
     body = jinja.template("blog/journal.html", journal=j, config=config.config)
