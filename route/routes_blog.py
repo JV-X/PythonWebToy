@@ -31,7 +31,7 @@ def about(request):
 
 def for_melody(request):
     j = Journal()
-    j.title = "张迪"
+    j.title = "hello"
     j.content = static_txt("1.md").decode(encoding='utf-8', errors='strict')
     body = jinja.template("blog/journal.html", journal=j, config=config.config)
     return response(body)

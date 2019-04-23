@@ -129,4 +129,5 @@ def static_txt(name):
 
 log = Log()
 jinja = Jinja()
+
 session = []

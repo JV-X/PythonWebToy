@@ -19,7 +19,6 @@ def route_404(request):
 
 
 def response_for_path(request):
-    log.i("request is {}".format(request))
     routes = {}
     routes.update(route_blog())
     routes.update(api_blog())
@@ -32,6 +31,7 @@ def response_for_path(request):
 def server_run():
     host = config.config['host']
     port = config.config['port']
+
     with socket.socket() as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, port))
@@ -65,6 +65,7 @@ def process_request(conn):
 
 def init():  # 临时处理, 解决服务器上工作路径不对导致的问题
     _sys = platform_type()
+
     if _sys == "Linux":
         os.chdir("/root/web-app/PythonWebToy")
         config.config = config.server
