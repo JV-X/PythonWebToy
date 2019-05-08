@@ -1,5 +1,5 @@
 # PythonWebToy
-a simple python web application 
+a simple python web application base on socket
 
 
 基于socket的python服务器框架sample应用
